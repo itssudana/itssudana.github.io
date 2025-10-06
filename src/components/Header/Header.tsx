@@ -128,6 +128,21 @@ export default function Header() {
     },
   };
 
+  // Tambahkan handler ini di dalam komponen Header
+  const handleLogoClick = () => {
+    if (window.location.pathname !== "/") {
+      navigate("/");
+      setTimeout(() => {
+        const el = document.querySelector("#home");
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 400);
+    } else {
+      if (lenis) lenis.scrollTo("#home");
+    }
+    setIsMobileMenuOpen(false);
+  };
+
+
   return (
     <AnimatePresence>
       {showHeader && (
@@ -148,7 +163,7 @@ export default function Header() {
 
             {/* Logo */}
             <a
-              onClick={() => window.location.reload()}
+              onClick={handleLogoClick}
               className="cursor-pointer font-bold text-lg w-8 h-8 inline-block"
             >
               <img
