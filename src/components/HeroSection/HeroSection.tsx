@@ -88,7 +88,7 @@ export const HeroSection = () => {
             animation="glow"
             onClick={() =>
               window.open(
-                "https://acrobat.adobe.com/id/urn:aaid:sc:AP:9c6ece72-ed7f-446b-820b-aecf1337361e",
+                "https://acrobat.adobe.com/id/urn:aaid:sc:AP:c2d53c1b-8628-4bbd-995f-cb957455bf21",
                 "_blank"
               )
             }
