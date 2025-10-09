@@ -13,6 +13,7 @@ import { ContactSection } from "./components/ContactSection/Contact";
 import ReactLenis from "lenis/react";
 import Dock from "./components/lightswind/dock";
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import CustomCursor from "./components/lightswind/CustomCursor";
 import CloveApp from "./pages/cloveapp";
 import CloveDryer from "./pages/clovedryer";
 import WebPortfolioI from "./pages/web-portfolio-i";
@@ -135,6 +136,7 @@ function AppContent() {
 
   return (
     <div className="bg-background min-h-screen w-screen overflow-x-hidden relative">
+      
       {/* Splash overlay */}
       <AnimatePresence>
         {showSplash && (
@@ -144,6 +146,9 @@ function AppContent() {
           />
         )}
       </AnimatePresence>
+
+       {/* 🔥 Cursor aktif setelah Splash hilang */}
+      {!showSplash && <CustomCursor />}
 
       {/* Main app content */}
       <div className={`${showSplash ? "opacity-0" : "opacity-100"} transition-opacity duration-700`}>
