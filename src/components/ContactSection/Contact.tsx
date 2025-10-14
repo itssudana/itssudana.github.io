@@ -144,10 +144,6 @@ export function ContactSection() {
               <h4 className="text-xl font-semibold">Email:</h4>
               <p className="text-sm text-muted-foreground">sudana.works@gmail.com</p>
             </div>
-            <div>
-              <h4 className="text-xl font-semibold">Call:</h4>
-              <p className="text-sm text-muted-foreground">+62 812 3762 4047</p>
-            </div>
 
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d965.0361894885489!2d115.22485512418211!3d-8.627626785889746!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sid!4v1714199468875!5m2!1sen!2sid"

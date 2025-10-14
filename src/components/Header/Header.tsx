@@ -34,21 +34,13 @@ export default function Header() {
   const [showHeader, setShowHeader] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const lastScrollYRef = useRef(0); 
-
+  const lastScrollYRef = useRef(0);
   const lenis = useLenis();
-  
-  // API on/off baru (hindari deprecated warning)
+
   useEffect(() => {
     if (!lenis) return;
-
-    const handleLenisScroll = () => {
-      // Bisa tambahkan logika kalau butuh, contoh debug
-      // console.log("lenis scroll");
-    };
-
+    const handleLenisScroll = () => {};
     lenis.on("scroll", handleLenisScroll);
-
     return () => {
       lenis.off("scroll", handleLenisScroll);
     };
@@ -56,14 +48,12 @@ export default function Header() {
 
   const navigate = useNavigate();
 
-  // Update theme
   useEffect(() => {
     if (theme === "dark") document.documentElement.classList.add("dark");
     else document.documentElement.classList.remove("dark");
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  // Hide/show header on scroll
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
@@ -74,17 +64,14 @@ export default function Header() {
       }
       lastScrollYRef.current = currentScrollY;
     };
-
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []); // ✅ tidak pakai dependency lastScrollY
+  }, []);
 
-  // Disable body scroll when mobile menu open
   useEffect(() => {
     document.body.style.overflow = isMobileMenuOpen ? "hidden" : "";
   }, [isMobileMenuOpen]);
 
-  // Scroll / Navigate logic
   const handleScrollTo = (id: string) => {
     if (window.location.pathname !== "/") {
       navigate("/");
@@ -98,7 +85,6 @@ export default function Header() {
     setIsMobileMenuOpen(false);
   };
 
-  // Framer Motion variants
   const menuVariants: Variants = {
     open: {
       clipPath: "circle(1200px at 90% 5%)",
@@ -128,7 +114,29 @@ export default function Header() {
     },
   };
 
-  // Tambahkan handler ini di dalam komponen Header
+  // ✨ Variants untuk animasi ikon sosial
+  const socialVariants: Variants = {
+    open: {
+      transition: { staggerChildren: 0.1, delayChildren: 0.6 },
+    },
+    closed: {
+      transition: { staggerChildren: 0.05, staggerDirection: -1 },
+    },
+  };
+
+  const iconVariants: Variants = {
+    open: {
+      y: 0,
+      opacity: 1,
+      transition: { type: "spring", stiffness: 300, damping: 25 },
+    },
+    closed: {
+      y: 20,
+      opacity: 0,
+      transition: { duration: 0.25, ease: "easeInOut" },
+    },
+  };
+
   const handleLogoClick = () => {
     if (window.location.pathname !== "/") {
       navigate("/");
@@ -141,7 +149,6 @@ export default function Header() {
     }
     setIsMobileMenuOpen(false);
   };
-
 
   return (
     <AnimatePresence>
@@ -290,7 +297,7 @@ export default function Header() {
                         className="flex items-center text-4xl font-bold text-gray-800 dark:text-white cursor-pointer space-x-3"
                       >
                         <span className="text-sm text-gray-500 dark:text-gray-400">
-                          {`0${index + 1}.`}
+                          {`0${index + 1}`}
                         </span>
                         <span>{item.name}</span>
                       </a>
@@ -298,8 +305,13 @@ export default function Header() {
                   ))}
                 </motion.ul>
 
-                <motion.div className="flex justify-center w-full mt-12 space-x-6">
-                  <a
+                {/* 🔹 Animated Social Icons */}
+                <motion.div
+                  variants={socialVariants}
+                  className="flex justify-center w-full mt-12 space-x-6"
+                >
+                  <motion.a
+                    variants={iconVariants}
                     href="https://github.com/itssudana"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -308,8 +320,9 @@ export default function Header() {
                       size={28}
                       className="text-gray-800 dark:text-white hover:text-blue-500 transition-colors"
                     />
-                  </a>
-                  <a
+                  </motion.a>
+                  <motion.a
+                    variants={iconVariants}
                     href="https://linkedin.com/in/rainnathapro"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -318,8 +331,9 @@ export default function Header() {
                       size={28}
                       className="text-gray-800 dark:text-white hover:text-blue-500 transition-colors"
                     />
-                  </a>
-                  <a
+                  </motion.a>
+                  <motion.a
+                    variants={iconVariants}
                     href="https://instagram.com/everydynormalguy"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -328,7 +342,7 @@ export default function Header() {
                       size={28}
                       className="text-gray-800 dark:text-white hover:text-blue-500 transition-colors"
                     />
-                  </a>
+                  </motion.a>
                 </motion.div>
               </motion.div>
             )}

@@ -9,7 +9,7 @@ import { ProjectsSection } from "./components/ProjectsSection/ProjectsSection";
 import { EducationSection } from "./components/EducationSection/EducationSection";
 import { CareerTimeline } from "./components/CareerSection/CareerTimeline";
 import { ContactSection } from "./components/ContactSection/Contact";
-import ReactLenis from "lenis/react";
+import ReactLenis, { useLenis } from "lenis/react";
 import Dock from "./components/lightswind/dock";
 import {
   BrowserRouter as Router,
@@ -61,6 +61,7 @@ function AppContent() {
 
   const navigate = useNavigate();
   const location = useLocation();
+  const lenis = useLenis();
 
   useEffect(() => {
     let minTimePassed = false;
@@ -123,16 +124,23 @@ function AppContent() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
 
+  // ✅ Update scroll halus pakai Lenis dengan easing inertia
   const scrollToSection = (id: string) => {
+    const scrollOptions = {
+      offset: -20, // biar ga ketutupan header
+      duration: 1.4,
+      easing: (t: number) => 1 - Math.pow(2, -10 * t), // easeOutExpo
+    };
+
     if (location.pathname !== "/") {
       navigate("/");
       setTimeout(() => {
         const el = document.getElementById(id);
-        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 400);
+        if (el && lenis) lenis.scrollTo(el, scrollOptions);
+      }, 300);
     } else {
       const el = document.getElementById(id);
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (el && lenis) lenis.scrollTo(el, scrollOptions);
     }
   };
 

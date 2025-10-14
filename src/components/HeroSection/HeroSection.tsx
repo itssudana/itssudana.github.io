@@ -1,8 +1,6 @@
-import { Badge } from "../lightswind/badge";
 import { motion } from "framer-motion";
-import { FileDown } from "lucide-react";
-import { ConfettiButton } from "../lightswind/confetti-button";
-import { TypingText } from "../lightswind/Typing-Text";
+import { ArrowUpRight } from "lucide-react";
+import RotatingText  from "../lightswind/RotatingText";
 import ProfileCard from "../lightswind/ProfileCard";
 
 export const HeroSection = () => {
@@ -37,18 +35,31 @@ export const HeroSection = () => {
           </motion.span>
         </motion.h1>
 
-        <TypingText
-          delay={4}
-          duration={2.8}
-          fontSize="text-xl"
-          fontWeight="font-medium"
-          letterSpacing="tracking-wider"
-          align="left"
-          loop={false}
-          color="text-muted-foreground"
+        <motion.p
+          className="text-sm text-muted-foreground flex items-center gap-2 leading-snug"
+          initial={{ opacity: 0, y: 15, filter: "blur(3px)" }}
+          animate={{
+            opacity: 1,
+            y: 0,
+            filter: "blur(0px)",
+            transition: { duration: 0.8, ease: "easeOut" },
+          }}
         >
-          Network Administrator {"\n"}& IoT Developer
-        </TypingText>
+          Focused on
+          <RotatingText
+            texts={["networking", "active directory", "troubleshooting"]}
+            mainClassName="inline-flex px-1.5 py-0.5 bg-blue-500 text-white dark:bg-blue-500 dark:text-black rounded-md overflow-hidden align-middle font-normal leading-snug"
+            staggerFrom="last"
+            initial={{ y: "100%", opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: "-100%", opacity: 0 }}
+            staggerDuration={0.02}
+            splitLevelClassName="overflow-hidden"
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            rotationInterval={4500} 
+          />
+        </motion.p>
+
 
         <motion.p
           className="mt-1 text-sm text-muted-foreground"
@@ -62,39 +73,39 @@ export const HeroSection = () => {
           functionality
         </motion.p>
 
-        {/* Badges */}
-        <motion.div
-          className="flex flex-wrap justify-center md:justify-start gap-2"
-          initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.8, ease: "easeOut" } }}
-        >
-          <Badge className="text-xs bg-blue-500">Networking</Badge>
-          <Badge className="text-xs bg-blue-500">Active Directory</Badge>
-          <Badge className="text-xs bg-blue-500">Troubleshooting</Badge>
-        </motion.div>
-
         {/* Download Resume Button */}
         <motion.div
           className="mt-4"
           initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.8, ease: "easeOut" } }}
+          animate={{
+            opacity: 1,
+            y: 0,
+            filter: "blur(0px)",
+            transition: { duration: 0.8, ease: "easeOut" },
+          }}
         >
-          <ConfettiButton
-            variant="ghost"
-            size="default"
-            triggerOnHover={true}
-            icon={<FileDown size={16} />}
-            iconPosition="left"
-            animation="glow"
+          <motion.button
             onClick={() =>
               window.open(
                 "https://acrobat.adobe.com/id/urn:aaid:sc:AP:c2d53c1b-8628-4bbd-995f-cb957455bf21",
                 "_blank"
               )
             }
+            className="group relative text-2sm font-medium text-muted-foreground flex items-center gap-2 px-2 py-1"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
           >
-            Resume
-          </ConfettiButton>
+            <ArrowUpRight
+              size={16}
+              className="transition-transform duration-300 group-hover:translate-x-1"
+            />
+
+            {/* Text container with underline animation */}
+            <span className="relative inline-block">
+              resume
+              <span className="absolute left-0 -bottom-0.5 h-[1.5px] w-0 bg-primary transition-all duration-300 group-hover:w-full" />
+            </span>
+          </motion.button>
         </motion.div>
       </motion.div>
 
