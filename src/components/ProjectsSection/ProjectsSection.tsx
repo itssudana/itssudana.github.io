@@ -147,10 +147,10 @@ const ProjectsSection: React.FC = () => {
     >
       {/* Heading */}
       <div className="text-center mb-8 relative z-10">
-        <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-          Works
+        <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4">
+          Recent Works
         </h2>
-        <p className="text-muted-foreground text-lg">
+        <p className="text-muted-foreground text-sm">
           Explore my latest initiatives in IT infrastructure, software and smart devices
         </p>
       </div>

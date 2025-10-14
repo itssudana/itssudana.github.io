@@ -3,7 +3,6 @@ import "./App.css";
 import SplashScreen from "./components/SplashScreen/SplashScreen";
 import Header from "./components/Header/Header";
 import { HeroSection } from "./components/HeroSection/HeroSection";
-import StripedBackground from "./components/lightswind/StripedBackground";
 import Noise from "./components/lightswind/Noise";
 import { AboutSection } from "./components/AboutSection/AboutSection";
 import { ProjectsSection } from "./components/ProjectsSection/ProjectsSection";
@@ -12,7 +11,13 @@ import { CareerTimeline } from "./components/CareerSection/CareerTimeline";
 import { ContactSection } from "./components/ContactSection/Contact";
 import ReactLenis from "lenis/react";
 import Dock from "./components/lightswind/dock";
-import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 import CustomCursor from "./components/lightswind/CustomCursor";
 import CloveApp from "./pages/cloveapp";
 import CloveDryer from "./pages/clovedryer";
@@ -20,24 +25,30 @@ import WebPortfolioI from "./pages/web-portfolio-i";
 import N8N from "./pages/chatbot-n8n";
 import CR7 from "./pages/cr-fanspage";
 import NetworkAdmin from "./pages/network-adm";
-import {
-  Home,
-  User,
-  Briefcase,
-  FolderKanban,
-  Contact,
-} from "lucide-react";
+import { Home, User, Briefcase, FolderKanban, Contact } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 function MainContent() {
   return (
     <div className="w-full max-w-5xl px-4 py-10 lg:rounded-3xl mx-auto flex flex-col gap-1">
-      <div id="home" className="pt-[80px] md:pt-[55px]"><HeroSection /></div>
-      <div id="about" className="md:pt-[15px]"><AboutSection /></div>
-      <div id="education" className="md:pt-[20px]"><EducationSection /></div>
-      <div id="career" className="pt-24 md:pt-20"><CareerTimeline /></div>
-      <div id="projects" className="pt-24 md:pt-20"><ProjectsSection /></div>
-      <div id="contact" className="pt-24 md:pt-20"><ContactSection /></div>
+      <div id="home" className="pt-[80px] md:pt-[55px]">
+        <HeroSection />
+      </div>
+      <div id="about" className="md:pt-[15px]">
+        <AboutSection />
+      </div>
+      <div id="education" className="md:pt-[20px]">
+        <EducationSection />
+      </div>
+      <div id="career" className="pt-24 md:pt-20">
+        <CareerTimeline />
+      </div>
+      <div id="projects" className="pt-24 md:pt-20">
+        <ProjectsSection />
+      </div>
+      <div id="contact" className="pt-24 md:pt-20">
+        <ContactSection />
+      </div>
     </div>
   );
 }
@@ -83,26 +94,25 @@ function AppContent() {
     };
   }, []);
 
-  // 🔒 Lock scroll ketika Splash masih aktif
+  // Lock scroll selama splash aktif
   useEffect(() => {
-  if (showSplash) {
-    const scrollY = window.scrollY;
-    document.body.style.position = "fixed";
-    document.body.style.top = `-${scrollY}px`;
-    document.body.style.left = "0";
-    document.body.style.right = "0";
-  } else {
-    const scrollY = -parseInt(document.body.style.top || "0");
-    document.body.style.position = "";
-    document.body.style.top = "";
-    document.body.style.left = "";
-    document.body.style.right = "";
-    window.scrollTo(0, scrollY); // kembali ke posisi scroll semula
-  }
-}, [showSplash]);
+    if (showSplash) {
+      const scrollY = window.scrollY;
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.left = "0";
+      document.body.style.right = "0";
+    } else {
+      const scrollY = -parseInt(document.body.style.top || "0");
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.right = "";
+      window.scrollTo(0, scrollY);
+    }
+  }, [showSplash]);
 
-
-  // Dock muncul / hilang saat scroll
+  // Dock muncul/hilang saat scroll
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
@@ -135,38 +145,30 @@ function AppContent() {
   ];
 
   return (
-    <div className="bg-background min-h-screen w-screen overflow-x-hidden relative">
-      
+    <div className="relative min-h-screen w-screen overflow-x-hidden bg-background">
+      {/*  Noise paling depan agar aktif dari awal */}
+      <Noise
+        patternRefreshInterval={window.innerWidth >= 768 ? 4 : 10}
+        patternAlpha={window.innerWidth >= 768 ? 12 : 5}
+      />
+
       {/* Splash overlay */}
       <AnimatePresence>
         {showSplash && (
-          <SplashScreen
-            ready={appReady}
-            onFinish={() => setShowSplash(false)}
-          />
+          <SplashScreen ready={appReady} onFinish={() => setShowSplash(false)} />
         )}
       </AnimatePresence>
 
-       {/* 🔥 Cursor aktif setelah Splash hilang */}
+      {/* Cursor */}
       {!showSplash && <CustomCursor />}
 
-      {/* Main app content */}
-      <div className={`${showSplash ? "opacity-0" : "opacity-100"} transition-opacity duration-700`}>
-        <div className="fixed inset-0 z-0 pointer-events-none">
-          {typeof window !== "undefined" && (
-            <Noise
-              patternSize={250}
-              patternScaleX={1}
-              patternScaleY={1}
-              patternRefreshInterval={window.innerWidth >= 768 ? 4 : 10}
-              patternAlpha={window.innerWidth >= 768 ? 12 : 5}
-            />
-          )}
-        </div>
-
-        <StripedBackground className="fixed inset-0 z-[-1] blur-xs w-screen max-w-full overflow-hidden" />
-
-        <ReactLenis root>
+      {/* Main app */}
+      <ReactLenis root>
+        <div
+          className={`relative z-10 transition-opacity duration-700 ${
+            showSplash ? "opacity-0" : "opacity-100"
+          }`}
+        >
           <Header />
           <Routes>
             <Route path="/" element={<MainContent />} />
@@ -177,27 +179,28 @@ function AppContent() {
             <Route path="/cr-fanspage" element={<CR7 />} />
             <Route path="/network-adm" element={<NetworkAdmin />} />
           </Routes>
+        </div>
 
-          <AnimatePresence>
-            {showDock && (
-              <motion.div
-                initial={{ y: 100, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: 100, opacity: 0 }}
-                transition={{ duration: 0.6, ease: "easeInOut" }}
-                className="fixed bottom-4 left-1/2 -translate-x-1/2 z-[999]"
-              >
-                <Dock
-                  items={dockItems}
-                  position="bottom"
-                  magnification={70}
-                  baseItemSize={50}
-                />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </ReactLenis>
-      </div>
+        {/* Dock */}
+        <AnimatePresence>
+          {showDock && (
+            <motion.div
+              initial={{ y: 100, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 100, opacity: 0 }}
+              transition={{ duration: 0.6, ease: "easeInOut" }}
+              className="fixed bottom-4 left-1/2 -translate-x-1/2 z-[999]"
+            >
+              <Dock
+                items={dockItems}
+                position="bottom"
+                magnification={70}
+                baseItemSize={50}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </ReactLenis>
     </div>
   );
 }

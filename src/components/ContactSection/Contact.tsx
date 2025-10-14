@@ -26,7 +26,7 @@ export function ContactSection() {
   const message = (form.elements.namedItem("message") as HTMLTextAreaElement).value;
   const time = new Date().toLocaleString();
 
-  // 1️⃣ Kirim notifikasi ke kamu
+  //  Kirim notifikasi ke kamu
   emailjs
     .send(
       "service_0ujdr6o", // Service ID
@@ -35,7 +35,7 @@ export function ContactSection() {
       "E-Y7QfPTrdkZahLI_" // Public Key
     )
     .then(() => {
-      // 2️⃣ Kirim auto-reply ke pengirim
+      // Kirim auto-reply ke pengirim
       return emailjs.send(
         "service_0ujdr6o", // Service ID
         "template_zts5and", // template auto-reply di EmailJS
@@ -46,12 +46,12 @@ export function ContactSection() {
     .then(() => {
       setLoading(false);
       setSent(true);
-      form.reset(); // ✅ kosongkan form hanya kalau berhasil
+      form.reset(); //  kosongkan form hanya kalau berhasil
     })
     .catch(() => {
       setLoading(false);
       setError(true);
-      // ❌ jangan reset kalau error
+      //  jangan reset kalau error
     });
 };
 
@@ -68,7 +68,7 @@ export function ContactSection() {
       {/* Section Title */}
       <div className="text-center mb-12">
         <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">Contact</h2>
-        <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+        <p className="text-muted-foreground text-sm max-w-2xl mx-auto">
           Feel free to reach out by email or phone for more information or collaboration opportunities.
         </p>
 
@@ -135,18 +135,18 @@ export function ContactSection() {
         >
           <div className="bg-card p-6 rounded-lg shadow space-y-6 h-full flex flex-col justify-between">
             <div>
-              <h4 className="text-lg font-semibold">Location:</h4>
-              <p className="text-muted-foreground">
+              <h4 className="text-xl font-semibold">Location:</h4>
+              <p className="text-sm text-muted-foreground">
                 North Nangka Street, Denpasar City, Denpasar 80239
               </p>
             </div>
             <div>
-              <h4 className="text-lg font-semibold">Email:</h4>
-              <p className="text-muted-foreground">sudana.works@gmail.com</p>
+              <h4 className="text-xl font-semibold">Email:</h4>
+              <p className="text-sm text-muted-foreground">sudana.works@gmail.com</p>
             </div>
             <div>
-              <h4 className="text-lg font-semibold">Call:</h4>
-              <p className="text-muted-foreground">+6281237624047</p>
+              <h4 className="text-xl font-semibold">Call:</h4>
+              <p className="text-sm text-muted-foreground">+62 812 3762 4047</p>
             </div>
 
             <iframe

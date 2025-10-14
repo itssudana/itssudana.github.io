@@ -83,7 +83,7 @@ export default function ProfessionalProfile() {
                   <div className="text-blue-500">{skill.icon}</div>
                   <div className="flex-1">
                     <h4 className="font-semibold">{skill.name}</h4>
-                    <p className="text-sm text-muted-foreground">{skill.description}</p>
+                    <p className="text-xs text-muted-foreground">{skill.description}</p>
                   </div>
                 </motion.div>
               ))}

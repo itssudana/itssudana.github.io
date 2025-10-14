@@ -226,7 +226,7 @@ export const ScrollTimeline = ({
     >
       <div className="text-center py-16 px-4">
         <h2 className="text-3xl md:text-5xl font-bold mb-4">{title}</h2>
-        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+        <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
           {subtitle}
         </p>
       </div>
@@ -354,7 +354,7 @@ export const ScrollTimeline = ({
                             </span>
                           </div>
                         ) : (
-                          <p className="text-lg font-bold text-primary mb-2">
+                          <p className="text-sm font-bold text-primary mb-2 text-muted-foreground">
                             {event.year}
                           </p>
                         )}
@@ -362,11 +362,11 @@ export const ScrollTimeline = ({
                           {event.title}
                         </h3>
                         {event.subtitle && (
-                          <p className="text-muted-foreground font-medium mb-2">
+                          <p className="text-sm font-medium mb-2">
                             {event.subtitle}
                           </p>
                         )}
-                        <p className="text-muted-foreground">
+                        <p className="text-muted-foreground text-sm">
                           {event.description}
                         </p>
                       </CardContent>

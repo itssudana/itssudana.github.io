@@ -7,15 +7,15 @@ import lightLogo from "/logo-light.svg";
 import darkLogo from "/logo-dark.svg";
 
 interface SplashScreenProps {
-  ready: boolean;         // ✅ dikontrol dari AppContent
-  onFinish: () => void;   // ✅ callback setelah animasi selesai
+  ready: boolean; // dikontrol dari AppContent
+  onFinish: () => void; // callback setelah animasi selesai
 }
 
 export default function SplashScreen({ ready, onFinish }: SplashScreenProps) {
   const ease = cubicBezier(0.4, 0, 0.2, 1);
   const [exit, setExit] = useState(false);
 
-  // 🔒 Lock scroll saat SplashScreen aktif
+  // 🔒 Lock scroll saat splash aktif
   useEffect(() => {
     document.body.style.overflow = "hidden";
     return () => {
@@ -51,20 +51,16 @@ export default function SplashScreen({ ready, onFinish }: SplashScreenProps) {
       {!exit && (
         <motion.div
           key="splash"
-          className="fixed inset-0 z-50 flex flex-col bg-background min-h-screen relative"
+          className="fixed inset-0 z-50 flex flex-col bg-background min-h-[100dvh] relative overflow-hidden"
         >
-          {/* Noise */}
           <div className="absolute inset-0 -z-10">
             <Noise
-              patternSize={250}
-              patternScaleX={1}
-              patternScaleY={1}
-              patternRefreshInterval={typeof window !== "undefined" && window.innerWidth >= 768 ? 4 : 10}
-              patternAlpha={typeof window !== "undefined" && window.innerWidth >= 768 ? 12 : 5}
+              patternRefreshInterval={window.innerWidth >= 768 ? 4 : 10}
+              patternAlpha={window.innerWidth >= 768 ? 12 : 5}
             />
           </div>
 
-          {/* Konten utama (logo + text) */}
+          {/*  Konten utama */}
           <div className="flex-1 flex flex-col justify-center items-center px-4">
             <motion.div
               className="w-16 h-16 md:w-24 md:h-24 relative"
@@ -94,18 +90,20 @@ export default function SplashScreen({ ready, onFinish }: SplashScreenProps) {
             </motion.h1>
           </div>
 
-          {/* Footer */}
-          <motion.div className="flex-none">
+          {/*  Footer aman untuk mobile + safe area */}
+          <motion.footer
+            className="mt-auto text-center px-4 pb-[calc(env(safe-area-inset-bottom)+2rem)]"
+            variants={footerVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          >
             <motion.p
-              className="text-sm text-muted-foreground text-center w-full mb-10"
-              variants={footerVariants}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
+              className="text-sm text-muted-foreground"
             >
               Designed and coded by Natha © 2025
             </motion.p>
-          </motion.div>
+          </motion.footer>
         </motion.div>
       )}
     </AnimatePresence>
