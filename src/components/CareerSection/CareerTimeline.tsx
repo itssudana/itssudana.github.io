@@ -1,4 +1,5 @@
 import { ScrollTimeline } from "../lightswind/scroll-timeline";
+import ScrollFloat from "../lightswind/ScrollFloat";
 import { Camera, LaptopMinimalCheck, Router } from "lucide-react";
 
 export const CareerTimeline = () => {
@@ -29,23 +30,41 @@ export const CareerTimeline = () => {
     },
   ];
 
-  return (
-    <div id="career">
-      <ScrollTimeline
-        events={careerEvents}
-        title="Career Journey"
-        subtitle="A journey driven by growth, creativity and meaningful contributions"
-        animationOrder="staggered"
-        cardAlignment="alternating"
-        cardVariant="elevated"
-        parallaxIntensity={0.15}
-        revealAnimation="fade"
-        progressIndicator={true}
-        lineColor="bg-primary/20"
-        activeColor="bg-primary"
-        progressLineWidth={3}
-        progressLineCap="round"
-      />
-    </div>
-  );
+  // ...import sama seperti sebelumnya
+
+return (
+  <div id="career" className="mt-12 md:mt-16">
+    {/* ScrollFloat untuk judul + subtitle (tetap) */}
+    <ScrollFloat
+  containerClassName="text-center"
+  textClassName="leading-snug" // lebih rapat
+>
+  <span className="block font-bold text-primary text-4xl sm:text-4xl md:text-5xl">
+    Career Journey
+  </span>
+  <span className="block text-muted-foreground text-xs sm:text-sm md:text-base font-normal mt-5 px-4 sm:px-6 md:px-8 mx-auto max-w-[600px]">
+    A journey driven by growth, creativity and meaningful contributions
+  </span>
+</ScrollFloat>
+
+
+    {/* Pastikan title/subtitle ScrollTimeline dikosongkan supaya tidak duplikat */}
+    <ScrollTimeline
+      events={careerEvents}
+      title={""}               // <-- kosongkan judul internal
+      subtitle={""}            // <-- kosongkan subtitle internal
+      animationOrder="staggered"
+      cardAlignment="alternating"
+      cardVariant="elevated"
+      parallaxIntensity={0.15}
+      revealAnimation="fade"
+      progressIndicator={true}
+      lineColor="bg-primary/20"
+      activeColor="bg-primary"
+      progressLineWidth={3}
+      progressLineCap="round"
+    />
+  </div>
+);
+
 };

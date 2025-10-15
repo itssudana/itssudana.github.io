@@ -17,6 +17,8 @@ import { BorderBeam } from "../lightswind/border-beam";
 import { useNavigate } from "react-router-dom";
 import lightLogo from "../Header/logo-light.svg";
 import darkLogo from "../Header/logo-dark.svg";
+import lgLight from "../Header/lg-light.svg";
+import lgDark from "../Header/lg-dark.svg";
 
 // List navigation items
 const navItems = [
@@ -27,6 +29,57 @@ const navItems = [
   { name: "CONTACT", href: "#contact" },
 ];
 
+export function LogoButton({ theme, handleLogoClick }: any) {
+  const [isHover, setIsHover] = useState(false);
+
+  return (
+    <motion.div
+      onHoverStart={() => setIsHover(true)}
+      onHoverEnd={() => setIsHover(false)}
+      onClick={handleLogoClick}
+      className="relative w-10 h-10 cursor-pointer select-none"
+    >
+      {/* Logo utama (tertebas keluar) */}
+      <motion.img
+        src={theme === "light" ? lightLogo : darkLogo}
+        alt="Main Logo"
+        className="absolute inset-0 w-full h-full object-contain z-10"
+        animate={{
+          opacity: isHover ? 0 : 1,
+          x: isHover ? 40 : 0,
+          y: isHover ? -30 : 0,
+          scale: isHover ? 0.8 : 1,
+          rotate: isHover ? -15 : 0,
+        }}
+        transition={{
+          duration: 0.2,
+          ease: "easeOut",
+        }}
+      />
+
+      {/* Logo hover (muncul dari posisi sama, tapi fade + scale) */}
+      <motion.img
+        src={theme === "light" ? lgLight : lgDark}
+        alt="Hover Logo"
+        className="absolute inset-0 w-full h-full object-contain z-0"
+        animate={{
+          opacity: isHover ? 1 : 0,
+          scale: isHover ? 1.3 : 1,
+          rotate: 0,
+          x: 0,
+          y: 0,
+        }}
+        transition={{
+          duration: 0.2,
+          ease: "easeOut",
+        }}
+      />
+    </motion.div>
+  );
+}
+
+
+// ✅ Komponen utama Header
 export default function Header() {
   const [theme, setTheme] = useState<string>(
     () => localStorage.getItem("theme") || "light"
@@ -36,6 +89,7 @@ export default function Header() {
 
   const lastScrollYRef = useRef(0);
   const lenis = useLenis();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!lenis) return;
@@ -45,8 +99,6 @@ export default function Header() {
       lenis.off("scroll", handleLenisScroll);
     };
   }, [lenis]);
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (theme === "dark") document.documentElement.classList.add("dark");
@@ -85,6 +137,19 @@ export default function Header() {
     setIsMobileMenuOpen(false);
   };
 
+  const handleLogoClick = () => {
+    if (window.location.pathname !== "/") {
+      navigate("/");
+      setTimeout(() => {
+        const el = document.querySelector("#home");
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 400);
+    } else {
+      if (lenis) lenis.scrollTo("#home");
+    }
+    setIsMobileMenuOpen(false);
+  };
+
   const menuVariants: Variants = {
     open: {
       clipPath: "circle(1200px at 90% 5%)",
@@ -114,7 +179,6 @@ export default function Header() {
     },
   };
 
-  // ✨ Variants untuk animasi ikon sosial
   const socialVariants: Variants = {
     open: {
       transition: { staggerChildren: 0.1, delayChildren: 0.6 },
@@ -137,19 +201,6 @@ export default function Header() {
     },
   };
 
-  const handleLogoClick = () => {
-    if (window.location.pathname !== "/") {
-      navigate("/");
-      setTimeout(() => {
-        const el = document.querySelector("#home");
-        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 400);
-    } else {
-      if (lenis) lenis.scrollTo("#home");
-    }
-    setIsMobileMenuOpen(false);
-  };
-
   return (
     <AnimatePresence>
       {showHeader && (
@@ -168,22 +219,8 @@ export default function Header() {
           >
             <BorderBeam />
 
-            {/* Logo */}
-            <a
-              onClick={handleLogoClick}
-              className="cursor-pointer font-bold text-lg w-8 h-8 inline-block"
-            >
-              <img
-                src={lightLogo}
-                alt="Logo Light"
-                className="block dark:hidden w-full h-full"
-              />
-              <img
-                src={darkLogo}
-                alt="Logo Dark"
-                className="hidden dark:block w-full h-full"
-              />
-            </a>
+            {/* ✅ Panggil komponen Logo */}
+            <LogoButton theme={theme} handleLogoClick={handleLogoClick} />
 
             {/* Desktop Nav */}
             <nav className="hidden md:flex flex-1 justify-center">

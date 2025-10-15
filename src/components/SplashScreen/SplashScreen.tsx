@@ -99,7 +99,7 @@ export default function SplashScreen({ ready, onFinish }: SplashScreenProps) {
             exit="exit"
           >
             <motion.p
-              className="text-sm text-muted-foreground"
+              className="text-[0.75rem] sm:text-sm text-muted-foreground"
             >
               Designed and coded by Natha © 2025
             </motion.p>

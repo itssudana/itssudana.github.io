@@ -5,6 +5,7 @@ import { Input } from "../lightswind/Input";
 import { Textarea } from "../lightswind/textarea";
 import { Github, Linkedin, Instagram } from "lucide-react";
 import { useState } from "react";
+import RippleButton from "../lightswind/RippleButton";
 import emailjs from "@emailjs/browser";
 
 export function ContactSection() {
@@ -190,17 +191,15 @@ export function ContactSection() {
               </p>
             )}
           </div>
-
-          <div className="mt-auto">
-            <motion.button
-              type="submit"
+          <div className="mt-auto flex justify-center items-center w-full">
+            <RippleButton
+              text={loading ? "Sending..." : "Send Message"}
+              circleColor="#0062ffff"
               disabled={loading}
-              className="w-full bg-blue-600 text-white py-2 px-6 rounded-md font-medium hover:bg-blue-700 transition-colors disabled:opacity-50"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.97 }}
-            >
-              {loading ? "Sending..." : "Send Message"}
-            </motion.button>
+              type="submit" // langsung submit form
+              width="150px" // optional
+              height="40px"
+            />
           </div>
         </motion.form>
       </div>

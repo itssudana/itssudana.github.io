@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import RotatingText  from "../lightswind/RotatingText";
 import ProfileCard from "../lightswind/ProfileCard";
+import DecryptedText from "../lightswind/DecryptedText";
 
 export const HeroSection = () => {
   return (
@@ -60,18 +61,30 @@ export const HeroSection = () => {
           />
         </motion.p>
 
-
-        <motion.p
+        <motion.div
           className="mt-1 text-sm text-muted-foreground"
           initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.8, ease: "easeOut" } }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+            filter: "blur(0px)",
+            transition: { duration: 0.8, ease: "easeOut" },
+          }}
         >
-          I am an IT Specialist passionate about Networking and IoT Development,
-          dedicated to designing robust network solutions. I explore innovative
-          technologies to enable seamless connectivity, optimize performance
-          while developing smart IoT systems that enhance efficiency and
-          functionality
-        </motion.p>
+          <DecryptedText
+            text="I am an IT Specialist passionate about Networking and IoT Development,
+                  dedicated to designing robust network solutions. I explore innovative
+                  technologies to enable seamless connectivity, optimize performance
+                  while developing smart IoT systems that enhance efficiency and
+                  functionality."
+            speed={80}
+            maxIterations={30}
+            useOriginalCharsOnly 
+            animateOn="view"
+            revealDirection="start"
+            className="text-muted-foreground"
+          />
+        </motion.div>
 
         {/* Download Resume Button */}
         <motion.div

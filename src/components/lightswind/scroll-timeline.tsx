@@ -92,8 +92,8 @@ export const ScrollTimeline = ({
   });
 
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
+    stiffness: 150,
+    damping: 40,
     restDelta: 0.001,
   });
 
@@ -224,7 +224,7 @@ export const ScrollTimeline = ({
         className
       )}
     >
-      <div className="text-center py-16 px-4">
+      <div className="text-center py-4 px-4">
         <h2 className="text-3xl md:text-5xl font-bold mb-4">{title}</h2>
         <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
           {subtitle}
