@@ -4,11 +4,7 @@ import RotatingText  from "../lightswind/RotatingText";
 import ProfileCard from "../lightswind/ProfileCard";
 import DecryptedText from "../lightswind/DecryptedText";
 
-const aboutText = `I am an IT Specialist passionate about Networking and IoT Development,
-dedicated to designing robust network solutions. I explore innovative
-technologies to enable seamless connectivity, optimize performance
-while developing smart IoT systems that enhance efficiency and
-functionality.`;
+const aboutText = `I am an IT Specialist passionate about Networking and IoT Development, dedicated to designing robust network solutions. I explore innovative technologies to enable seamless connectivity, optimize performance while developing smart IoT systems that enhance efficiency and functionality.`;
 
 export const HeroSection = () => {
   return (
