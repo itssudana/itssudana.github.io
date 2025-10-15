@@ -36,8 +36,6 @@ const softSkills = [
   "Problem Solving",
   "Effective teamwork",
   "Adaptable learner",
-  "Proficient in computer applications",
-  "English"
 ];
 
 export default function ProfessionalProfile() {
