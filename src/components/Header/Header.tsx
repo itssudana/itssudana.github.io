@@ -2,12 +2,10 @@
 
 import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import type { Variants, MotionProps } from "framer-motion";
+import type { Variants } from "framer-motion";
 import {
   Menu,
   X,
-  Sun,
-  Moon,
   Github,
   Linkedin,
   Instagram,
@@ -19,6 +17,7 @@ import lightLogo from "../Header/logo-light.svg";
 import darkLogo from "../Header/logo-dark.svg";
 import lgLight from "../Header/lg-light.svg";
 import lgDark from "../Header/lg-dark.svg";
+import { ToggleTheme } from "../lightswind/toggle-theme";
 
 // List navigation items
 const navItems = [
@@ -31,7 +30,6 @@ const navItems = [
 
 export function LogoButton({ theme, handleLogoClick }: any) {
   const [isHover, setIsHover] = useState(false);
-
   return (
     <motion.div
       onHoverStart={() => setIsHover(true)}
@@ -39,7 +37,6 @@ export function LogoButton({ theme, handleLogoClick }: any) {
       onClick={handleLogoClick}
       className="relative w-10 h-10 cursor-pointer select-none"
     >
-      {/* Logo utama (tertebas keluar) */}
       <motion.img
         src={theme === "light" ? lightLogo : darkLogo}
         alt="Main Logo"
@@ -51,13 +48,8 @@ export function LogoButton({ theme, handleLogoClick }: any) {
           scale: isHover ? 0.8 : 1,
           rotate: isHover ? -15 : 0,
         }}
-        transition={{
-          duration: 0.2,
-          ease: "easeOut",
-        }}
+        transition={{ duration: 0.2, ease: "easeOut" }}
       />
-
-      {/* Logo hover (muncul dari posisi sama, tapi fade + scale) */}
       <motion.img
         src={theme === "light" ? lgLight : lgDark}
         alt="Hover Logo"
@@ -65,40 +57,50 @@ export function LogoButton({ theme, handleLogoClick }: any) {
         animate={{
           opacity: isHover ? 1 : 0,
           scale: isHover ? 1.3 : 1,
-          rotate: 0,
-          x: 0,
-          y: 0,
         }}
-        transition={{
-          duration: 0.2,
-          ease: "easeOut",
-        }}
+        transition={{ duration: 0.2, ease: "easeOut" }}
       />
     </motion.div>
   );
 }
 
-
 // ✅ Komponen utama Header
 export default function Header() {
   const [theme, setTheme] = useState<string>(
-    () => localStorage.getItem("theme") || "light"
-  );
+  () => localStorage.getItem("theme") || "light"
+);
+
+useEffect(() => {
+  const updateTheme = () => {
+    const newTheme = localStorage.getItem("theme") || "light";
+    setTheme(newTheme);
+  };
+
+  // Jalankan langsung waktu mount
+  updateTheme();
+
+  // Pantau perubahan di localStorage
+  window.addEventListener("storage", updateTheme);
+
+  // Pantau perubahan langsung di class html (biar lebih responsif)
+  const observer = new MutationObserver(updateTheme);
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["class"],
+  });
+
+  return () => {
+    window.removeEventListener("storage", updateTheme);
+    observer.disconnect();
+  };
+}, []);
+
   const [showHeader, setShowHeader] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const lastScrollYRef = useRef(0);
   const lenis = useLenis();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!lenis) return;
-    const handleLenisScroll = () => {};
-    lenis.on("scroll", handleLenisScroll);
-    return () => {
-      lenis.off("scroll", handleLenisScroll);
-    };
-  }, [lenis]);
 
   useEffect(() => {
     if (theme === "dark") document.documentElement.classList.add("dark");
@@ -109,20 +111,12 @@ export default function Header() {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      if (currentScrollY > lastScrollYRef.current && currentScrollY > 80) {
-        setShowHeader(false);
-      } else {
-        setShowHeader(true);
-      }
+      setShowHeader(!(currentScrollY > lastScrollYRef.current && currentScrollY > 80));
       lastScrollYRef.current = currentScrollY;
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  useEffect(() => {
-    document.body.style.overflow = isMobileMenuOpen ? "hidden" : "";
-  }, [isMobileMenuOpen]);
 
   const handleScrollTo = (id: string) => {
     if (window.location.pathname !== "/") {
@@ -131,24 +125,11 @@ export default function Header() {
         const el = document.querySelector(id);
         if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
       }, 400);
-    } else {
-      if (lenis) lenis.scrollTo(id);
-    }
+    } else if (lenis) lenis.scrollTo(id);
     setIsMobileMenuOpen(false);
   };
 
-  const handleLogoClick = () => {
-    if (window.location.pathname !== "/") {
-      navigate("/");
-      setTimeout(() => {
-        const el = document.querySelector("#home");
-        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 400);
-    } else {
-      if (lenis) lenis.scrollTo("#home");
-    }
-    setIsMobileMenuOpen(false);
-  };
+  const handleLogoClick = () => handleScrollTo("#home");
 
   const menuVariants: Variants = {
     open: {
@@ -158,46 +139,6 @@ export default function Header() {
     closed: {
       clipPath: "circle(20px at 90% 5%)",
       transition: { type: "spring", stiffness: 400, damping: 40 },
-    },
-  };
-
-  const listVariants: Variants = {
-    open: { transition: { staggerChildren: 0.07, delayChildren: 0.2 } },
-    closed: { transition: { staggerChildren: 0.05, staggerDirection: -1 } },
-  };
-
-  const itemVariants: Variants = {
-    open: {
-      y: 0,
-      opacity: 1,
-      transition: { y: { stiffness: 1000, velocity: -100 } },
-    },
-    closed: {
-      y: 50,
-      opacity: 0,
-      transition: { y: { stiffness: 1000 } },
-    },
-  };
-
-  const socialVariants: Variants = {
-    open: {
-      transition: { staggerChildren: 0.1, delayChildren: 0.6 },
-    },
-    closed: {
-      transition: { staggerChildren: 0.05, staggerDirection: -1 },
-    },
-  };
-
-  const iconVariants: Variants = {
-    open: {
-      y: 0,
-      opacity: 1,
-      transition: { type: "spring", stiffness: 300, damping: 25 },
-    },
-    closed: {
-      y: 20,
-      opacity: 0,
-      transition: { duration: 0.25, ease: "easeInOut" },
     },
   };
 
@@ -219,7 +160,6 @@ export default function Header() {
           >
             <BorderBeam />
 
-            {/* ✅ Panggil komponen Logo */}
             <LogoButton theme={theme} handleLogoClick={handleLogoClick} />
 
             {/* Desktop Nav */}
@@ -247,35 +187,13 @@ export default function Header() {
               </ul>
             </nav>
 
-            {/* Theme Toggle (desktop) */}
-            <motion.button
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="p-2 rounded-full text-sm font-semibold hover:bg-blue-400 dark:hover:bg-blue-800 transition-colors hidden md:block"
-            >
-              <AnimatePresence mode="wait" initial={false}>
-                {theme === "dark" ? (
-                  <motion.div
-                    key="sun"
-                    initial={{ y: -20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: 20, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <Sun size={20} className="text-gray-800 dark:text-white" />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="moon"
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -20, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <Moon size={20} className="text-gray-800 dark:text-white" />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.button>
+            {/* ✅ Ganti tombol theme lama dengan komponen baru */}
+            <div className="hidden md:block">
+              <ToggleTheme
+                animationType="circle-spread"
+                className="text-gray-800 dark:text-white"
+              />
+            </div>
 
             {/* Mobile Menu Button */}
             <button
@@ -286,49 +204,34 @@ export default function Header() {
             </button>
           </div>
 
-          {/* Mobile Sidebar */}
+          {/* ✅ Mobile Sidebar */}
           <AnimatePresence>
             {isMobileMenuOpen && (
               <motion.div
-                {...({
-                  initial: "closed",
-                  animate: "open",
-                  exit: "closed",
-                  variants: menuVariants,
-                } as MotionProps)}
-                className="fixed inset-0 z-40 w-full max-w-full bg-background dark:bg-background-dark md:hidden flex flex-col items-start justify-center overflow-hidden px-8"
+                initial="closed"
+                animate="open"
+                exit="closed"
+                variants={menuVariants}
+                className="fixed inset-0 z-40 w-full bg-background dark:bg-background-dark md:hidden flex flex-col items-start justify-center overflow-hidden px-8"
               >
                 <motion.button
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="absolute top-8 right-8 text-gray-800 dark:text-white"
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  exit={{ scale: 0, opacity: 0 }}
-                  transition={{ delay: 0.2 }}
                 >
                   <X size={32} />
                 </motion.button>
 
-                <motion.button
-                  onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                  className="absolute top-8 left-8 p-2 rounded-full text-gray-800 dark:text-white"
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  exit={{ scale: 0, opacity: 0 }}
-                  transition={{ delay: 0.3 }}
-                >
-                  {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
-                </motion.button>
+                {/* ✅ Ganti tombol theme mobile juga */}
+                <div className="absolute top-8 left-8">
+                  <ToggleTheme
+                    animationType="circle-spread"
+                    className="text-gray-800 dark:text-white"
+                  />
+                </div>
 
-                <motion.ul
-                  {...({ variants: listVariants } as MotionProps)}
-                  className="flex flex-col space-y-8"
-                >
+                <motion.ul className="flex flex-col space-y-8">
                   {navItems.map((item, index) => (
-                    <motion.li
-                      key={item.name}
-                      {...({ variants: itemVariants } as MotionProps)}
-                    >
+                    <motion.li key={item.name}>
                       <a
                         onClick={() => handleScrollTo(item.href)}
                         className="flex items-center text-4xl font-bold text-gray-800 dark:text-white cursor-pointer space-x-3"
@@ -342,45 +245,29 @@ export default function Header() {
                   ))}
                 </motion.ul>
 
-                {/* 🔹 Animated Social Icons */}
-                <motion.div
-                  variants={socialVariants}
-                  className="flex justify-center w-full mt-12 space-x-6"
-                >
-                  <motion.a
-                    variants={iconVariants}
+                <div className="flex justify-center w-full mt-12 space-x-6">
+                  <a
                     href="https://github.com/itssudana"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <Github
-                      size={28}
-                      className="text-gray-800 dark:text-white hover:text-blue-500 transition-colors"
-                    />
-                  </motion.a>
-                  <motion.a
-                    variants={iconVariants}
+                    <Github size={28} className="text-gray-800 dark:text-white hover:text-blue-500 transition-colors" />
+                  </a>
+                  <a
                     href="https://linkedin.com/in/rainnathapro"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <Linkedin
-                      size={28}
-                      className="text-gray-800 dark:text-white hover:text-blue-500 transition-colors"
-                    />
-                  </motion.a>
-                  <motion.a
-                    variants={iconVariants}
+                    <Linkedin size={28} className="text-gray-800 dark:text-white hover:text-blue-500 transition-colors" />
+                  </a>
+                  <a
                     href="https://instagram.com/everydynormalguy"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <Instagram
-                      size={28}
-                      className="text-gray-800 dark:text-white hover:text-blue-500 transition-colors"
-                    />
-                  </motion.a>
-                </motion.div>
+                    <Instagram size={28} className="text-gray-800 dark:text-white hover:text-blue-500 transition-colors" />
+                  </a>
+                </div>
               </motion.div>
             )}
           </AnimatePresence>
