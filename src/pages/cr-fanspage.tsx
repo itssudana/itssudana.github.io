@@ -204,7 +204,7 @@ export default function CR7() {
           >
             <Link
               to="/network-adm"
-              className="flex items-center gap-2 relative"
+              className="flex items-center gap-2 relative -translate-x-6"
             >
               <motion.span
                 className="flex items-center gap-2 absolute left-0 opacity-0 font-bold text-gray-700 dark:text-white"
