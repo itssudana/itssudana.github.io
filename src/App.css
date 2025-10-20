@@ -13,23 +13,31 @@
 
 @font-face {
   font-family: "StudioFeixenSans";
-  src: url("../src/components/fonts/StudioFeixenSans-Regular.woff2") format("woff2");
+  src: url("/fonts/StudioFeixenSans-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: "StudioFeixenSans";
-  src: url("../src/components/fonts/StudioFeixenSans-Medium.woff2") format("woff2");
+  src: url("/fonts/StudioFeixenSans-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
   font-family: "StudioFeixenSans";
-  src: url("../src/components/fonts/StudioFeixenSans-Bold.woff2") format("woff2");
+  src: url("/fonts/StudioFeixenSans-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
+}
+
+@font-face {
+  font-family: "StudioFeixenSansVariable";
+  src: url("/fonts/StudioFeixenSans-Variable.woff2") format("woff2-variations");
+  font-weight: 100 1000;
+  font-style: normal;
+  font-display: swap;
 }
 
 
