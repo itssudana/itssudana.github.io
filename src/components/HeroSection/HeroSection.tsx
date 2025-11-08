@@ -98,7 +98,7 @@ export const HeroSection = () => {
           <motion.button
             onClick={() =>
               window.open(
-                "https://acrobat.adobe.com/id/urn:aaid:sc:AP:c2d53c1b-8628-4bbd-995f-cb957455bf21",
+                "https://acrobat.adobe.com/id/urn:aaid:sc:AP:84d26d8f-e0d6-4ed5-8dc4-d1767f0bdac8",
                 "_blank"
               )
             }
