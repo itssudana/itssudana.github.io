@@ -70,7 +70,7 @@ export function ContactSection() {
       <div className="text-center mb-12">
         <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">Contact</h2>
         <p className="text-muted-foreground text-sm max-w-2xl mx-auto">
-          Feel free to reach out by email or phone for more information or collaboration opportunities.
+          Feel free to reach out via email or social media for more information and collaboration opportunities
         </p>
 
         {/* Sosial Media Icons - CENTER */}
