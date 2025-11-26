@@ -6,7 +6,7 @@ export const CareerTimeline = () => {
   const careerEvents = [
     {
       year: "06/2025 to 12/2025",
-      title: "Network Administrator",
+      title: "IT Staff",
       subtitle: "THE HAVEN BALI SEMINYAK",
       description:
         "Maintain and optimize network infrastructure while monitoring performance and security to ensure reliable connectivity",
