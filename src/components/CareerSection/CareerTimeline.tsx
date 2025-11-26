@@ -13,7 +13,7 @@ export const CareerTimeline = () => {
       icon: <Router className="h-4 w-4 mr-2 text-primary" />,
     },
     {
-      year: "10/2022 to 12/2022",
+      year: "06/2022 to 12/2022",
       title: "IT Support",
       subtitle: "INSPEKTORAT PROVINSI BALI",
       description:
