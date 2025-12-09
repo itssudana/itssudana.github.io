@@ -75,6 +75,16 @@ const projects: VisualItem[] = [
     link: "/network-adm",
     category: "Things",
   },
+  {
+    key: 6,
+    url: "/img/portfolio/pawspective/main.jpg",
+    title: "Pawspective App",
+    subtitle:
+      "Discover small moments of joy, one dog fact at a time",
+    date: "08/12/2025",
+    link: "/pawspective",
+    category: "App",
+  },
 ];
 
 const categories = ["All", "App", "Web", "Things"];

@@ -25,6 +25,7 @@ import WebPortfolioI from "./pages/web-portfolio-i";
 import N8N from "./pages/chatbot-n8n";
 import CR7 from "./pages/cr-fanspage";
 import NetworkAdmin from "./pages/network-adm";
+import Pawspective from "./pages/pawspective";
 import { Home, User, Briefcase, FolderKanban, Contact } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -186,6 +187,7 @@ function AppContent() {
             <Route path="/chatbot-n8n" element={<N8N />} />
             <Route path="/cr-fanspage" element={<CR7 />} />
             <Route path="/network-adm" element={<NetworkAdmin />} />
+            <Route path="/pawspective" element={<Pawspective />} />
           </Routes>
         </div>
 

@@ -177,7 +177,7 @@ export default function NetworkAdmin() {
             animate="rest"
           >
             <Link
-              to="/clove-app"
+              to="/pawspective"
               className="flex items-center gap-2 relative -translate-x-6"
             >
               <motion.span
@@ -214,11 +214,11 @@ export default function NetworkAdmin() {
 
           {/* Judul Project Selanjutnya */}
           <Link
-            to="/clove-app"
+            to="/pawspective"
             className="ml-4 text-gray-700 dark:text-white truncate md:truncate-none"
           >
             <div className="flex flex-col items-end text-right leading-tight">
-              <span className="sm:text-xl md:text-2xl font-bold">clove app monitoring</span>
+              <span className="sm:text-xl md:text-2xl font-bold">pawspective app</span>
               <span className="sm:text-base md:text-xl font-normal text-muted-foreground">app</span>
             </div>
           </Link>

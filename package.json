@@ -17,6 +17,7 @@
     "@emailjs/browser": "^4.4.1",
     "@fontsource/geist-sans": "^5.2.5",
     "@splinetool/react-spline": "^4.1.0",
+    "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.23.12",
     "geist": "^1.4.2",
     "gsap": "^3.13.0",
