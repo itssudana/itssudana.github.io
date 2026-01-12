@@ -5,6 +5,14 @@ import { Camera, LaptopMinimalCheck, Router } from "lucide-react";
 export const CareerTimeline = () => {
   const careerEvents = [
     {
+      year: "01/2026 to 12/2027",
+      title: "IT Staff",
+      subtitle: "SILOAM HOSPITALS DENPASAR",
+      description:
+        "IT Support at Siloam Hospitals Denpasar responsible for ensuring the stability, security and availability of hospital IT systems 24/7 through technical support, network management and compliance with hospital SOPs",
+      icon: <LaptopMinimalCheck className="h-4 w-4 mr-2 text-primary" />,
+    },
+    {
       year: "06/2025 to 12/2025",
       title: "IT Staff",
       subtitle: "THE HAVEN BALI SEMINYAK",
@@ -23,15 +31,14 @@ export const CareerTimeline = () => {
     {
       year: "10/2019 to 01/2020",
       title: "Editor",
-      subtitle: "EX-IT Studio",
+      subtitle: "EX-IT STUDIO",
       description:
-        "Produced visually compelling content through photography, videography, and motion graphics, while handling multiple projects efficiently",
+        "Produced visually compelling content through photography, videography and motion graphics, while handling multiple projects efficiently",
       icon: <Camera className="h-4 w-4 mr-2 text-primary" />,
     },
   ];
 
-  // ...import sama seperti sebelumnya
-
+  
 return (
   <div id="career" className="mt-12 md:mt-16">
     {/* ScrollFloat untuk judul + subtitle (tetap) */}
