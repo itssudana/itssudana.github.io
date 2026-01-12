@@ -5,11 +5,11 @@ import { Camera, LaptopMinimalCheck, Router } from "lucide-react";
 export const CareerTimeline = () => {
   const careerEvents = [
     {
-      year: "01/2026 to 12/2027",
+      year: "01/2026 to 01/2027",
       title: "IT Staff",
       subtitle: "SILOAM HOSPITALS DENPASAR",
       description:
-        "IT Support at Siloam Hospitals Denpasar responsible for ensuring the stability, security and availability of hospital IT systems 24/7 through technical support, network management and compliance with hospital SOPs",
+        "Responsible for ensuring the stability, security and availability of hospital IT systems 24/7 through technical support, network management and compliance with hospital SOPs",
       icon: <LaptopMinimalCheck className="h-4 w-4 mr-2 text-primary" />,
     },
     {
